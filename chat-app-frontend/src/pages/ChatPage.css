@@ -1,0 +1,446 @@
+/* 2090 Futuristic Chat Interface */
+:root {
+  /* Neo-Quantum Color Scheme */
+  --quantum-primary: #6e00ff;
+  --quantum-secondary: #00f0ff;
+  --quantum-accent: #ff00e6;
+  --hologram-blue: rgba(0, 240, 255, 0.15);
+  --hologram-pink: rgba(255, 0, 230, 0.15);
+  --dark-matter: #0a0a12;
+  --space-gray: #1a1a2e;
+  --cosmic-text: #e0e0ff;
+  --starlight: rgba(255, 255, 255, 0.8);
+  --void: rgba(0, 0, 0, 0.3);
+  
+  /* Advanced Effects */
+  --glass-blur: blur(16px);
+  --quantum-glow: 0 0 15px var(--quantum-primary);
+  --hologram-glow: 0 0 30px rgba(110, 0, 255, 0.5);
+  --neon-border: 1px solid rgba(110, 0, 255, 0.5);
+  
+  /* Dynamic Sizing */
+  --sidebar-width: clamp(280px, 25vw, 400px);
+  --header-height: clamp(60px, 8vh, 80px);
+  
+  /* Z-index layers */
+  --z-header: 100;
+  --z-sidebar: 90;
+  --z-backdrop: 80;
+  --z-modal: 1100;
+  --z-drawer: 1200;
+  
+  /* Futuristic Transitions */
+  --quantum-transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --hologram-transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Modern Light Theme Overrides */
+[data-theme="light"] {
+  --dark-matter: #ffffff;
+  --space-gray: #f8fafc;
+  --cosmic-text: #1e293b;
+  --starlight: rgba(0, 0, 0, 0.8);
+  --void: rgba(255, 255, 255, 0.6);
+  --hologram-blue: rgba(99, 102, 241, 0.08);
+  --hologram-pink: rgba(236, 72, 153, 0.08);
+  --neon-border: 1px solid rgba(99, 102, 241, 0.2);
+  --quantum-glow: 0 0 15px rgba(99, 102, 241, 0.2);
+  --hologram-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+  --glass-blur: blur(20px);
+}
+
+/* Base Quantum Interface */
+@font-face {
+  font-family: 'Quantum';
+  src: url('https://fonts.cdnfonts.com/css/quantum');
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: radial-gradient(ellipse at bottom, var(--dark-matter) 0%, #000000 100%);
+  color: var(--cosmic-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  height: 100vh;
+  overflow: hidden;
+}
+
+[data-theme="light"] body {
+  background: radial-gradient(ellipse at bottom, var(--dark-matter) 0%, #f1f5f9 100%);
+}
+
+/* Holographic Chat Container */
+.quantum-chat {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.quantum-chat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, var(--hologram-blue), transparent 40%),
+    radial-gradient(circle at 80% 70%, var(--hologram-pink), transparent 40%);
+  z-index: -1;
+  opacity: 0.6;
+  animation: hologram-pulse 12s infinite alternate;
+}
+
+[data-theme="light"] .quantum-chat::before {
+  opacity: 0.4;
+}
+
+/* Neuro-Interface Header */
+.neuro-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: var(--header-height);
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: var(--neon-border);
+  box-shadow: var(--quantum-glow);
+  z-index: var(--z-header);
+}
+
+[data-theme="light"] .neuro-header {
+  background: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.neuro-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--quantum-primary), 
+    var(--quantum-secondary), 
+    var(--quantum-accent), 
+    transparent);
+  animation: spectrum-flow 8s linear infinite;
+  background-size: 200% 100%;
+}
+
+[data-theme="light"] .neuro-header::after {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(99, 102, 241, 0.5), 
+    rgba(236, 72, 153, 0.5), 
+    rgba(6, 182, 212, 0.5), 
+    transparent);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-theme="light"] .app-title {
+  background: linear-gradient(90deg, #6366f1, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Main Quantum Grid */
+.quantum-grid {
+  display: flex;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Holographic Sidebar */
+.quantum-sidebar {
+  position: relative;
+  width: var(--sidebar-width);
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-right: var(--neon-border);
+  overflow: hidden;
+  transform: translateX(0);
+  transition: var(--quantum-transition);
+  z-index: var(--z-sidebar);
+  display: flex;
+  flex-direction: column;
+}
+
+[data-theme="light"] .quantum-sidebar {
+  background: rgba(255, 255, 255, 0.7);
+  border-right: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.03);
+}
+
+.quantum-sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--quantum-primary), 
+    var(--quantum-secondary), 
+    transparent);
+}
+
+[data-theme="light"] .quantum-sidebar::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(99, 102, 241, 0.4), 
+    rgba(236, 72, 153, 0.4), 
+    transparent);
+}
+
+/* Neural Chat Area */
+.neural-chat {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 10, 18, 0.7);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  overflow: hidden;
+}
+
+[data-theme="light"] .neural-chat {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* Floating UI elements */
+.floating-ui {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hologram-node {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+  animation: float 15s infinite ease-in-out;
+}
+
+.node-1 {
+  background: var(--quantum-primary);
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.node-2 {
+  background: var(--quantum-secondary);
+  top: 60%;
+  left: 70%;
+  animation-delay: -5s;
+}
+
+.node-3 {
+  background: var(--quantum-accent);
+  top: 30%;
+  left: 50%;
+  animation-delay: -10s;
+}
+
+[data-theme="light"] .hologram-node {
+  opacity: 0.15;
+  filter: blur(70px);
+}
+
+[data-theme="light"] .node-1 {
+  background: rgba(99, 102, 241, 0.4);
+}
+
+[data-theme="light"] .node-2 {
+  background: rgba(236, 72, 153, 0.4);
+}
+
+[data-theme="light"] .node-3 {
+  background: rgba(6, 182, 212, 0.4);
+}
+
+/* Sidebar Backdrop */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--void);
+  backdrop-filter: blur(5px);
+  z-index: var(--z-backdrop);
+  animation: fadeIn 0.3s ease-out;
+}
+
+[data-theme="light"] .sidebar-backdrop {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Quantum Control (Buttons) */
+.quantum-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  color: var(--cosmic-text);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantum-control:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--quantum-primary);
+  box-shadow: var(--quantum-glow);
+}
+
+[data-theme="light"] .quantum-control {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .quantum-control:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+/* Responsive Quantum Adjustments */
+@media (max-width: 1024px) {
+  .quantum-sidebar {
+    position: fixed;
+    width: var(--sidebar-width);
+    height: 100%;
+    transform: translateX(-100%);
+    box-shadow: var(--hologram-glow);
+    z-index: var(--z-drawer);
+  }
+  
+  .quantum-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .back-button {
+    display: block;
+  }
+}
+
+/* Animations */
+@keyframes hologram-pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes spectrum-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Micro-interactions */
+button:active {
+  transform: scale(0.98) translateY(1px);
+}
+
+/* Holographic Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--quantum-primary), var(--quantum-secondary));
+  border-radius: 3px;
+  transition: var(--quantum-transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--quantum-accent);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgba(99, 102, 241, 0.5), rgba(236, 72, 153, 0.5));
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgba(99, 102, 241, 0.7), rgba(236, 72, 153, 0.7));
+}
+
+/* Neuro-Synaptic Focus States */
+:focus-visible {
+  outline: 2px solid var(--quantum-secondary);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.3);
+}
+
+[data-theme="light"] :focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}

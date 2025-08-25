@@ -1,0 +1,149 @@
+/* Quantum Gateway Interface */
+.homepage-container {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center, var(--space-gray) 0%, var(--dark-matter) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.homepage-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, var(--hologram-blue), transparent 40%),
+    radial-gradient(circle at 80% 70%, var(--hologram-pink), transparent 40%);
+  z-index: -1;
+  opacity: 0.6;
+  animation: hologram-pulse 12s infinite alternate;
+}
+
+.homepage-content {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.app-header {
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: var(--glass-blur);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--hologram-glow);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border: var(--neon-border);
+}
+
+.app-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--starlight);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.app-subtitle {
+  color: var(--quantum-secondary);
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+.auth-container {
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: var(--glass-blur);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--hologram-glow);
+  margin-bottom: 1.5rem;
+  border: var(--neon-border);
+}
+
+.tab-list {
+  display: flex;
+  background-color: rgba(110, 0, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(110, 0, 255, 0.3);
+}
+
+.tab-item {
+  width: 100%;
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--quantum-primary);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: var(--quantum-transition);
+}
+
+.tab-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--starlight);
+}
+
+.tab-item-selected {
+  background: rgba(110, 0, 255, 0.3);
+  box-shadow: 0 0 15px rgba(110, 0, 255, 0.3);
+  color: var(--starlight);
+  font-weight: 600;
+}
+
+.features-container {
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: var(--glass-blur);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--hologram-glow);
+  border: var(--neon-border);
+}
+
+.features-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--starlight);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  color: var(--cosmic-text);
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  transition: var(--quantum-transition);
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.feature-item:hover {
+  background: rgba(0, 240, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.feature-icon {
+  color: var(--quantum-secondary);
+  margin-right: 1rem;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+}
+
+@keyframes hologram-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
