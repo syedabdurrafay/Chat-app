@@ -1,6 +1,7 @@
 [build]
+  base = "chat-app-frontend"
+  publish = "chat-app-frontend/dist"
   command = "npm run build"
-  publish = "dist"
 
 [[redirects]]
   from = "/*"
