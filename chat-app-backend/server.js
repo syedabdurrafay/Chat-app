@@ -8,6 +8,7 @@ import { Server } from 'socket.io';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 // Route imports
 import authRoutes from './routes/authRoutes.js';
@@ -29,16 +30,20 @@ const httpServer = createServer(app);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Ensure uploads directory exists
+// Ensure uploads directory exists (⚠️ ephemeral on Railway, use Cloudinary instead)
 const uploadsDir = path.join(__dirname, 'uploads');
-import fs from 'fs';
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// CORS configuration
+// ✅ CORS configuration for production
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:5173'],
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    process.env.FRONTEND_URL, // your frontend deployed on Netlify
+    process.env.BACKEND_URL   // your backend on Railway
+  ].filter(Boolean), // remove undefined values
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -63,10 +68,15 @@ app.use('/api/message', messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-// Socket.io configuration
+// ✅ Socket.io configuration
 const io = new Server(httpServer, {
   cors: {
-    origin: ['http://localhost:3000', 'http://localhost:5173'],
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      process.env.FRONTEND_URL,
+      process.env.BACKEND_URL
+    ].filter(Boolean),
     methods: ['GET', 'POST'],
     credentials: true
   },
@@ -124,22 +134,28 @@ io.on('connection', (socket) => {
   });
 });
 
-// Database connection and server start
+// ✅ Database connection and server start
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/chat-app';
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error('❌ MONGO_URI is not defined in environment variables');
+  process.exit(1);
+}
 
 mongoose.connect(MONGO_URI)
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('✅ Connected to MongoDB');
     httpServer.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`🚀 Server running on port ${PORT}`);
     });
   })
   .catch((err) => {
-    console.error('Database connection failed:', err.message);
+    console.error('❌ Database connection failed:', err.message);
     process.exit(1);
   });
 
+// Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
   console.error('Unhandled Rejection:', err.message);
   httpServer.close(() => process.exit(1));
